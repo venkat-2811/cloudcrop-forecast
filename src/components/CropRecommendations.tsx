@@ -2,6 +2,8 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 interface CropRecommendation {
   name: string;
@@ -54,14 +56,29 @@ const getWaterRequirementColor = (requirement: 'Low' | 'Medium' | 'High') => {
   return 'bg-sky-600/10 text-sky-600';
 };
 
-const CropRecommendations: React.FC = () => {
+interface CropRecommendationsProps {
+  locationName?: string;
+}
+
+const CropRecommendations: React.FC<CropRecommendationsProps> = ({ locationName }) => {
+  const navigate = useNavigate();
+  
+  const handleSoilAnalysis = () => {
+    navigate('/soil-and-crop', { state: { locationName: locationName || 'Your Location' } });
+  };
+  
   return (
     <Card className="animate-fade-up">
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <span>Crop Recommendations</span>
-          <Badge variant="outline" className="ml-2 text-xs">Coming Soon</Badge>
-        </CardTitle>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle>Crop Recommendations</CardTitle>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={handleSoilAnalysis}
+          className="ml-auto"
+        >
+          Detailed Soil & Crop Analysis
+        </Button>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">

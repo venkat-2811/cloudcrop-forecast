@@ -151,7 +151,7 @@ const WeatherDashboard: React.FC = () => {
         </TabsList>
         
         <TabsContent value="crops" className="space-y-4 mt-4">
-          <CropRecommendations />
+          <CropRecommendations locationName={location.name} />
         </TabsContent>
         
         <TabsContent value="market" className="space-y-4 mt-4">
