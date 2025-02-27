@@ -125,7 +125,7 @@ const cropRecommendationsPerSoilAndStatus: Record<string, CropRecommendation[]> 
       growthPeriod: '80-180 days',
       waterRequirements: 'Moderate',
       idealTemperature: '15-20°C',
-      notes: 'Clay soil's moisture retention benefits cabbage. Can be planted in early spring or late summer.'
+      notes: 'Clay soil\'s moisture retention benefits cabbage. Can be planted in early spring or late summer.'
     },
     {
       name: 'Broccoli',
@@ -151,7 +151,7 @@ const cropRecommendationsPerSoilAndStatus: Record<string, CropRecommendation[]> 
       growthPeriod: '30-60 days',
       waterRequirements: 'Moderate',
       idealTemperature: '15-20°C',
-      notes: 'Silty soil's moisture retention is excellent for leafy greens. Can be planted in early spring and fall.'
+      notes: 'Silty soil\'s moisture retention is excellent for leafy greens. Can be planted in early spring and fall.'
     },
     {
       name: 'Cucumbers',
@@ -185,7 +185,7 @@ const cropRecommendationsPerSoilAndStatus: Record<string, CropRecommendation[]> 
       growthPeriod: '70-120 days',
       waterRequirements: 'Moderate',
       idealTemperature: '15-20°C',
-      notes: 'Peaty soil's acidity and loose structure benefit potatoes. Plant when soil temperature reaches 10°C.'
+      notes: 'Peaty soil\'s acidity and loose structure benefit potatoes. Plant when soil temperature reaches 10°C.'
     },
     {
       name: 'Carrots',
@@ -399,7 +399,7 @@ const SoilAndCrop: React.FC = () => {
                   <RadioGroupItem value="new" id="new" />
                   <Label htmlFor="new" className="font-normal cursor-pointer">
                     <div className="font-medium">Yet to start farming</div>
-                    <p className="text-sm text-muted-foreground">I'm planning to start farming soon and need recommendations</p>
+                    <p className="text-sm text-muted-foreground">I&apos;m planning to start farming soon and need recommendations</p>
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
