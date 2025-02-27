@@ -15,11 +15,21 @@ interface LocationSelectorProps {
   onLocationChange: (location: Location) => void;
 }
 
+// Interface for OpenWeatherMap geocoding API response
+interface GeocodingResult {
+  name: string;
+  lat: number;
+  lon: number;
+  country: string;
+  state?: string;
+}
+
 const LocationSelector: React.FC<LocationSelectorProps> = ({
   location,
   onLocationChange
 }) => {
   const [isLocating, setIsLocating] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleGetCurrentLocation = async () => {
@@ -62,12 +72,54 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
     }
   }, []);
 
-  // In a real app we'd use an API to search for locations by name
-  // This is just a placeholder showing UI without implementation
+  // Function to search for locations using OpenWeatherMap geocoding API
+  const searchLocation = async (query: string) => {
+    if (!query.trim()) return;
+    
+    setIsSearching(true);
+    
+    try {
+      const API_KEY = '72cb03ddb9cc38658bd51e4b865978ff';
+      const response = await fetch(
+        `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(query)}&limit=1&appid=${API_KEY}`
+      );
+      
+      if (!response.ok) {
+        throw new Error('Failed to search for location');
+      }
+      
+      const data: GeocodingResult[] = await response.json();
+      
+      if (data.length === 0) {
+        toast.error('Location not found. Try a different search term.');
+        setIsSearching(false);
+        return;
+      }
+      
+      const result = data[0];
+      const locationName = result.state 
+        ? `${result.name}, ${result.state}, ${result.country}`
+        : `${result.name}, ${result.country}`;
+        
+      onLocationChange({
+        name: locationName,
+        lat: result.lat,
+        lon: result.lon
+      });
+      
+      toast.success(`Location updated to ${locationName}`);
+      setSearchQuery('');
+    } catch (error) {
+      console.error('Error searching for location:', error);
+      toast.error('Failed to search for location');
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.info('Location search is not implemented in this demo');
-    setSearchQuery('');
+    searchLocation(searchQuery);
   };
 
   return (
@@ -75,13 +127,18 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
       <form onSubmit={handleSearchSubmit} className="flex gap-2">
         <Input
           type="text"
-          placeholder="Search location..."
+          placeholder="Enter city name..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="flex-1"
+          disabled={isSearching}
         />
-        <Button type="submit" variant="secondary">
-          Search
+        <Button 
+          type="submit" 
+          variant="secondary"
+          disabled={isSearching || !searchQuery.trim()}
+        >
+          {isSearching ? 'Searching...' : 'Search'}
         </Button>
       </form>
       
