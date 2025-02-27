@@ -7,7 +7,7 @@ import { CurrentWeatherData, ForecastData, Location, DailyForecast } from '../ty
 const API_KEY = '72cb03ddb9cc38658bd51e4b865978ff';
 const BASE_URL = 'https://api.openweathermap.org/data/2.5';
 
-const fetchCurrentWeather = async (lat: number, lon: number, units = 'imperial'): Promise<CurrentWeatherData> => {
+const fetchCurrentWeather = async (lat: number, lon: number, units = 'metric'): Promise<CurrentWeatherData> => {
   const response = await fetch(
     `${BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=${units}`
   );
@@ -19,7 +19,7 @@ const fetchCurrentWeather = async (lat: number, lon: number, units = 'imperial')
   return response.json();
 };
 
-const fetchForecast = async (lat: number, lon: number, units = 'imperial'): Promise<ForecastData> => {
+const fetchForecast = async (lat: number, lon: number, units = 'metric'): Promise<ForecastData> => {
   const response = await fetch(
     `${BASE_URL}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=${units}`
   );

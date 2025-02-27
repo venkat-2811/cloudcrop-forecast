@@ -94,7 +94,7 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = ({
     },
     {
       label: 'Wind',
-      value: `${Math.round(wind.speed)} mph`,
+      value: `${Math.round(wind.speed)} m/s`,
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"></path>
@@ -143,9 +143,9 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = ({
           </div>
           
           <div className="space-y-1 text-center md:text-left">
-            <h2 className="text-3xl font-bold tracking-tight">{temp}°F</h2>
+            <h2 className="text-3xl font-bold tracking-tight">{temp}°C</h2>
             <p className="text-sm capitalize">{currentWeather.description}</p>
-            <p className="text-xs text-muted-foreground">Feels like {feelsLike}°F</p>
+            <p className="text-xs text-muted-foreground">Feels like {feelsLike}°C</p>
             <p className="text-xs font-medium">{name}, {sys.country}</p>
           </div>
           

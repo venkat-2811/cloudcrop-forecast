@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -13,6 +14,7 @@ import MarketPrices from './MarketPrices';
 import useWeather from '@/hooks/useWeather';
 
 const WeatherDashboard: React.FC = () => {
+  const navigate = useNavigate();
   // Start with a default location (will be overridden by geolocation if available)
   const [location, setLocation] = useState({
     name: 'Loading...',
@@ -34,6 +36,10 @@ const WeatherDashboard: React.FC = () => {
     updateLocation(newLocation);
   };
 
+  const navigateToSoilAndCrop = () => {
+    navigate('/soil-and-crop', { state: { locationName: location.name } });
+  };
+
   return (
     <div className="space-y-6 pb-10">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -45,9 +51,19 @@ const WeatherDashboard: React.FC = () => {
           <div className="flex flex-col h-full">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold tracking-tight">Weather Dashboard</h2>
-              <Button variant="outline" size="sm" onClick={refetch} disabled={isLoading}>
-                Refresh
-              </Button>
+              <div className="flex gap-2">
+                <Button 
+                  variant="secondary" 
+                  size="sm" 
+                  onClick={navigateToSoilAndCrop}
+                  disabled={isLoading || !location.name || location.name === 'Loading...'}
+                >
+                  Soil & Crop Analysis
+                </Button>
+                <Button variant="outline" size="sm" onClick={refetch} disabled={isLoading}>
+                  Refresh
+                </Button>
+              </div>
             </div>
             
             <div className="space-y-6 flex-1">
